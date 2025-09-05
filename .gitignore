@@ -90,3 +90,11 @@ jspm_packages/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Trunk - ignore cache and generated files but keep configs
+.trunk/logs/
+.trunk/out/
+.trunk/notifications/
+.trunk/actions/
+.trunk/tools/
+.trunk/plugins/
