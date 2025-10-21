@@ -21,11 +21,12 @@ export class ExampleService implements ExampleServiceInterface {
    * @returns Promise that resolves to a service response
    */
   async execute(input: ServiceInput): Promise<ServiceResponse> {
-    // Create a response based on the input
-    const message = input.message || `Hello from the ${this.serviceName}!`;
+    if (!input.message) {
+      throw new Error("Invalid input");
+    }
 
     return {
-      text: `${this.serviceName}: ${message}`,
+      text: `${this.serviceName}: ${input.message}`,
     };
   }
 }

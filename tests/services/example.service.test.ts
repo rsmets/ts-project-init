@@ -6,7 +6,9 @@ describe("ExampleService", () => {
   it("Example happy path test with default input", async () => {
     const exampleService = new ExampleService("TestService");
 
-    const result = await exampleService.execute({});
+    const result = await exampleService.execute({
+      message: "Hello from the TestService!",
+    });
 
     assert.strictEqual(result.text, "TestService: Hello from the TestService!");
   });
@@ -24,19 +26,6 @@ describe("ExampleService", () => {
     );
   });
 
-  it("Example test with empty message", async () => {
-    const exampleService = new ExampleService("EmptyService");
-
-    const result = await exampleService.execute({
-      message: "",
-    });
-
-    assert.strictEqual(
-      result.text,
-      "EmptyService: Hello from the EmptyService!",
-    );
-  });
-
   it("Example test with default service name", async () => {
     const exampleService = new ExampleService("DefaultService");
 
@@ -45,5 +34,18 @@ describe("ExampleService", () => {
     });
 
     assert.strictEqual(result.text, "DefaultService: Default name test");
+  });
+
+  it("Example test with invalid input", async () => {
+    const exampleService = new ExampleService("InvalidService");
+
+    try {
+      await exampleService.execute({});
+    } catch (error) {
+      assert.strictEqual(error.message, "Invalid input");
+      return;
+    }
+
+    assert.strictEqual(true, false);
   });
 });
