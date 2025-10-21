@@ -6,7 +6,7 @@ describe("CoordinatorService", () => {
   it("Example happy path test", () => {
     const coordinatorService = new CoordinatorService(
       ["account1", "account2"],
-      [{ id: "account1", expiration: 4 }]
+      [{ id: "account1", expiration: 4 }],
     );
 
     assert.strictEqual(coordinatorService.isLocked("account1", 2), true);
@@ -18,7 +18,7 @@ describe("CoordinatorService", () => {
   it("Example invalid account input test", () => {
     const coordinatorService = new CoordinatorService(
       ["account1", "account2"],
-      [{ id: "account3", expiration: 4 }]
+      [{ id: "account3", expiration: 4 }],
     );
 
     assert.strictEqual(coordinatorService.isLocked("account1", 2), false);
@@ -33,7 +33,7 @@ describe("CoordinatorService", () => {
       [
         { id: "account1", expiration: 4 },
         { id: "account1", expiration: 0 },
-      ]
+      ],
     );
 
     assert.strictEqual(coordinatorService.isLocked("account1", 2), false);
@@ -48,7 +48,7 @@ describe("CoordinatorService", () => {
       [
         { id: "account1", expiration: 4 },
         { id: "account1", expiration: 0 },
-      ]
+      ],
     );
 
     try {
