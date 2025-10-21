@@ -3,5 +3,5 @@
  * Centralized export point for all services and interfaces
  */
 
-export { ServiceInterface } from "./example.service.interface";
-export { ExampleService } from "./example.service";
+export { CoordinatorInterface } from "./coordinator.service.interface";
+export { CoordinatorService } from "./coordinator.service";

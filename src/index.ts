@@ -1,5 +1,5 @@
 import { Config, ServiceInput, ServiceResponse } from "./types";
-import { ExampleService } from "./services";
+import { CoordinatorService, ExampleService } from "./services";
 
 /**
  * Main entry point of the application
@@ -14,39 +14,25 @@ async function main() {
   console.log(`🚀 Starting ${config.name} v${config.version}`);
   console.log("=".repeat(50));
 
-  // Create the example service
-  const exampleService = new ExampleService();
+  const accounts = ["account1", "account2"];
+  const activeLocks = [{ id: "account1", expiration: 4 }];
+
+  // create the coordinator service
+  const coordinatorService = new CoordinatorService(accounts, activeLocks);
 
   try {
     // Execute the service with default input
     console.log("\n📊 Running service with default input...");
-    const defaultResult: ServiceResponse = await exampleService.execute();
-
-    // Execute the service with custom input
-    console.log("\n📊 Running service with custom input...");
-    const customInput: ServiceInput = {
-      message: "Hello from custom input!",
-    };
-    const customResult: ServiceResponse = await exampleService.execute(
-      customInput
-    );
-
-    // Execute the service one more time
-    console.log("\n📊 Running service again...");
-    const thirdResult: ServiceResponse = await exampleService.execute();
-
-    // Display summary
-    console.log("\n📋 Service Execution Summary:");
-    console.log(`   Service Name: ${exampleService.getName()}`);
-    console.log(`   Default Result: ${defaultResult.text}`);
-    console.log(`   Custom Result: ${customResult.text}`);
-    console.log(`   Third Result: ${thirdResult.text}`);
+    const result = coordinatorService.isLocked("account1", 2);
+    console.log(result);
+    const result2 = coordinatorService.isLocked("account1", 4);
+    console.log(result2);
+    const result3 = coordinatorService.isLocked("account2", 3);
+    console.log(result3);
+    const result4 = coordinatorService.isLocked("account2", 4);
+    console.log(result4);
   } catch (error) {
     console.error("❌ Error during service execution:", error);
-  } finally {
-    // Always cleanup the service
-    console.log("\n🧹 Cleaning up services...");
-    await exampleService.cleanup();
   }
 
   console.log("\n✅ Application execution completed successfully");
