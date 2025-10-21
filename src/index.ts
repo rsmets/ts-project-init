@@ -15,38 +15,22 @@ async function main() {
   console.log("=".repeat(50));
 
   // Create the example service
-  const exampleService = new ExampleService();
+  const exampleService = new ExampleService("MyExampleService");
 
   try {
     // Execute the service with default input
     console.log("\n📊 Running service with default input...");
-    const defaultResult: ServiceResponse = await exampleService.execute();
+    const result = await exampleService.execute({});
+    console.log("Result:", result);
 
     // Execute the service with custom input
     console.log("\n📊 Running service with custom input...");
-    const customInput: ServiceInput = {
-      message: "Hello from custom input!",
-    };
-    const customResult: ServiceResponse = await exampleService.execute(
-      customInput
-    );
-
-    // Execute the service one more time
-    console.log("\n📊 Running service again...");
-    const thirdResult: ServiceResponse = await exampleService.execute();
-
-    // Display summary
-    console.log("\n📋 Service Execution Summary:");
-    console.log(`   Service Name: ${exampleService.getName()}`);
-    console.log(`   Default Result: ${defaultResult.text}`);
-    console.log(`   Custom Result: ${customResult.text}`);
-    console.log(`   Third Result: ${thirdResult.text}`);
+    const customResult = await exampleService.execute({
+      message: "This is a custom message!",
+    });
+    console.log("Custom Result:", customResult);
   } catch (error) {
     console.error("❌ Error during service execution:", error);
-  } finally {
-    // Always cleanup the service
-    console.log("\n🧹 Cleaning up services...");
-    await exampleService.cleanup();
   }
 
   console.log("\n✅ Application execution completed successfully");
