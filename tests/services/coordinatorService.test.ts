@@ -31,8 +31,8 @@ describe("CoordinatorService", () => {
     const coordinatorService = new CoordinatorService(
       ["account1", "account2"],
       [
-        { id: "account3", expiration: 4 },
-        { id: "account3", expiration: 0 },
+        { id: "account1", expiration: 4 },
+        { id: "account1", expiration: 0 },
       ]
     );
 
@@ -40,5 +40,21 @@ describe("CoordinatorService", () => {
     assert.strictEqual(coordinatorService.isLocked("account1", 4), false);
     assert.strictEqual(coordinatorService.isLocked("account2", 3), false);
     assert.strictEqual(coordinatorService.isLocked("account2", 4), false);
+  });
+
+  it("Example invalid account input", () => {
+    const coordinatorService = new CoordinatorService(
+      ["account1", "account2"],
+      [
+        { id: "account1", expiration: 4 },
+        { id: "account1", expiration: 0 },
+      ]
+    );
+
+    try {
+      coordinatorService.isLocked("accountx", 2);
+    } catch (error) {
+      assert.strictEqual(error.message, "Account not found");
+    }
   });
 });
